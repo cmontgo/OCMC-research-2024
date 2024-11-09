@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.10.3/Recharts.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
@@ -189,132 +190,94 @@
                 </div>
             </div>
         </div>
-                <div id="reasoning" class="tab-content" style="display: none;">
-            import React, { useState } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Search } from 'lucide-react';
-
-const MathSurveyAnalysis = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  
-  // Common themes identified in responses
-  const themes = [
-    { category: 'Basic Math Skills', count: 42, color: '#2563eb' },
-    { category: 'Problem Solving', count: 35, color: '#3b82f6' },
-    { category: 'Critical Thinking', count: 28, color: '#60a5fa' },
-    { category: 'Word Problems', count: 25, color: '#93c5fd' },
-    { category: 'Algebra', count: 22, color: '#bfdbfe' },
-    { category: 'Applications', count: 20, color: '#dbeafe' }
-  ];
-
-  // Suggested improvements
-  const improvements = [
-    { category: 'More Practice Time', count: 38, color: '#059669' },
-    { category: 'Better K-12 Foundation', count: 32, color: '#10b981' },
-    { category: 'Real-world Examples', count: 28, color: '#34d399' },
-    { category: 'Active Learning', count: 25, color: '#6ee7b7' },
-    { category: 'Additional Support', count: 22, color: '#a7f3d0' }
-  ];
-
-  // Sample responses for searching
-  const responses = [
-    "Basic numeracy with fractions and algebra",
-    "Critical thinking scenarios involving mathematics in program areas",
-    "Problem solving, logical thinking and general numeracy",
-    "Word problems and real life applications",
-    "Abstract thinking is hard for a portion of the students",
-    "Basic math skills, ability to do math without a tool",
-    "Converting business problems into math models/statements",
-    "Logical reasoning and problem-solving abilities",
-    "Understanding relationships between variables",
-    "Application of math concepts to practical real world problems"
-  ];
-
-  const filteredResponses = responses.filter(response =>
-    response.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Ontario College Mathematics Faculty Survey Analysis</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-gray-600 mb-4">
-            Analysis of responses to the question: "What aspect of mathematical reasoning do you think your students find the most difficult, and what would it take to improve it?"
-          </p>
-          
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">Key Challenges Identified</h3>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={themes} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="category" angle={-45} textAnchor="end" interval={0} height={60} />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#2563eb" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h3 className="text-lg font-semibold mb-4">Suggested Improvements</h3>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={improvements} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="category" angle={-45} textAnchor="end" interval={0} height={60} />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#059669" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <h3 className="text-lg font-semibold mb-4">Search Sample Responses</h3>
-            <div className="relative">
-              <Search className="absolute left-3 top-3 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Search responses..."
-                className="w-full pl-10 pr-4 py-2 border rounded-md"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="mt-4 space-y-2">
-              {filteredResponses.map((response, index) => (
-                <div key={index} className="p-3 bg-gray-50 rounded-md">
-                  {response}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-8">
-            <h3 className="text-lg font-semibold mb-4">Key Findings</h3>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Basic math skills and numeracy were the most commonly cited challenges</li>
-              <li>Many faculty emphasized the need for more practice time and better foundations</li>
-              <li>Real-world applications and active learning were frequently suggested improvements</li>
-              <li>Critical thinking and problem-solving abilities were recurring themes</li>
-              <li>Word problems and practical applications pose significant challenges</li>
-            </ul>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
-
-export default MathSurveyAnalysis;
+        <div class="container">
+        <div class="header">
+            <h1>Ontario College Mathematics Faculty Survey Analysis</h1>
+            <p class="description">Analysis of responses to the question: "What aspect of mathematical reasoning do you think your students find the most difficult, and what would it take to improve it?"</p>
         </div>
+
+        <div class="chart">
+            <div class="chart-title">Key Challenges Identified</div>
+            <canvas id="challengesChart"></canvas>
+        </div>
+
+        <div class="chart">
+            <div class="chart-title">Suggested Improvements</div>
+            <canvas id="improvementsChart"></canvas>
+        </div>
+
+        <div class="search-container">
+            <h2>Search Responses</h2>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search responses...">
+            <div id="responseList" class="response-list"></div>
+        </div>
+
+        <div class="findings">
+            <h2>Key Findings</h2>
+            <ul>
+                <li>Basic math skills and numeracy were the most commonly cited challenges (42 mentions)</li>
+                <li>Many faculty emphasized the need for more practice time and better foundations (38 mentions)</li>
+                <li>Real-world applications and active learning were frequently suggested improvements (28 mentions)</li>
+                <li>Critical thinking and problem-solving abilities were recurring themes (28 mentions)</li>
+                <li>Word problems and practical applications pose significant challenges (25 mentions)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script>
+        // Data for charts
+        const challengesData = {
+            labels: ['Basic Math Skills', 'Problem Solving', 'Critical Thinking', 'Word Problems', 'Algebra', 'Applications'],
+            values: [42, 35, 28, 25, 22, 20]
+        };
+
+        const improvementsData = {
+            labels: ['More Practice Time', 'Better K-12 Foundation', 'Real-world Examples', 'Active Learning', 'Additional Support'],
+            values: [38, 32, 28, 25, 22]
+        };
+
+        // Sample responses
+        const responses = [
+            "Basic numeracy with fractions and algebra",
+            "Critical thinking scenarios involving mathematics in program areas",
+            "Problem solving, logical thinking and general numeracy",
+            "Word problems and real life applications",
+            "Abstract thinking is hard for a portion of the students",
+            "Basic math skills, ability to do math without a tool",
+            "Converting business problems into math models/statements",
+            "Logical reasoning and problem-solving abilities",
+            "Understanding relationships between variables",
+            "Application of math concepts to practical real world problems"
+        ];
+
+        // Create charts
+        function createChart(canvasId, data, label, backgroundColor) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: label,
+                        data: data.values,
+                        backgroundColor: backgroundColor,
+                        borderColor: backgroundColor,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
     </div>
 
     <script>
@@ -380,7 +343,27 @@ export default MathSurveyAnalysis;
             event.target.classList.add('active');
         }
 
-        
+         createChart('challengesChart', challengesData, 'Number of Mentions', '#2563eb');
+        createChart('improvementsChart', improvementsData, 'Number of Mentions', '#059669');
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const responseList = document.getElementById('responseList');
+
+        function updateResponses(searchTerm) {
+            const filteredResponses = responses.filter(response =>
+                response.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            responseList.innerHTML = filteredResponses
+                .map(response => `<div class="response-item">${response}</div>`)
+                .join('');
+        }
+
+        searchInput.addEventListener('input', (e) => updateResponses(e.target.value));
+
+        // Initialize response list
+        updateResponses('');
     </script>
 </body>
 
