@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Education Survey Analysis</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .data-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #4F46E5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #4338CA;
+        }
+        .tab-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            border-bottom: 2px solid #4F46E5;
+            color: #4F46E5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #f8f8f8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Math Education Survey Analysis</h1>
+            <p>Interactive dashboard for analyzing faculty responses about mathematics education issues</p>
+            <div class="button-group">
+                <button onclick="downloadPDF()">Download PDF Report</button>
+                <button onclick="downloadExcel()">Download Excel Data</button>
+                <button onclick="downloadCSV()">Download CSV Data</button>
+            </div>
+        </div>
+
+        <div class="tab-group">
+            <div class="tab active" onclick="showTab('overview')">Overview</div>
+            <div class="tab" onclick="showTab('details')">Detailed Analysis</div>
+            <div class="tab" onclick="showTab('recommendations')">Recommendations</div>
+        </div>
+
+        <div id="overview" class="tab-content">
+            <div class="chart-container">
+                <canvas id="mainThemesChart"></canvas>
+            </div>
+            <div class="data-grid">
+                <div class="data-card">
+                    <h3>Key Statistics</h3>
+                    <ul>
+                        <li>Total Responses: 156</li>
+                        <li>Primary Concerns: 8 major themes</li>
+                        <li>Most Common Theme: Student Preparedness</li>
+                        <li>Emerging Issues: AI & Academic Integrity</li>
+                    </ul>
+                </div>
+                <div class="data-card">
+                    <h3>Quick Insights</h3>
+                    <ul>
+                        <li>27% mention student preparedness</li>
+                        <li>22% request more teaching resources</li>
+                        <li>18% discuss assessment methods</li>
+                        <li>16% want professional development</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="details" class="tab-content" style="display: none;">
+            <div class="chart-container">
+                <canvas id="preparednessChart"></canvas>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Theme</th>
+                        <th>Count</th>
+                        <th>Percentage</th>
+                        <th>Key Concerns</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Student Preparedness</td>
+                        <td>42</td>
+                        <td>27%</td>
+                        <td>Basic skills, high school transition</td>
+                    </tr>
+                    <tr>
+                        <td>Teaching Resources</td>
+                        <td>35</td>
+                        <td>22%</td>
+                        <td>Shared materials, practical examples</td>
+                    </tr>
+                    <tr>
+                        <td>Assessment Methods</td>
+                        <td>28</td>
+                        <td>18%</td>
+                        <td>AI challenges, authentic assessment</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="recommendations" class="tab-content" style="display: none;">
+            <div class="data-grid">
+                <div class="data-card">
+                    <h3>Short-term Actions</h3>
+                    <ul>
+                        <li>Create online resource repository</li>
+                        <li>Establish regular PD workshops</li>
+                        <li>Develop assessment tools</li>
+                        <li>Form AI working group</li>
+                    </ul>
+                </div>
+                <div class="data-card">
+                    <h3>Long-term Initiatives</h3>
+                    <ul>
+                        <li>Bridge high school-college gap</li>
+                        <li>Standardize assessment practices</li>
+                        <li>Build faculty communities</li>
+                        <li>Develop shared curriculum resources</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chart Data
+        const themeData = {
+            labels: ['Student Preparedness', 'Teaching Resources', 'Assessment Methods', 
+                    'Professional Development', 'Academic Integrity/AI', 'Student Support', 
+                    'Curriculum Design', 'Technology Integration'],
+            datasets: [{
+                label: 'Number of Responses',
+                data: [42, 35, 28, 25, 20, 18, 15, 12],
+                backgroundColor: '#4F46E5'
+            }]
+        };
+
+        const preparednessData = {
+            labels: ['Basic Math Skills', 'High School Transition', 'Math Anxiety', 'International Students'],
+            datasets: [{
+                label: 'Number of Responses',
+                data: [28, 24, 15, 12],
+                backgroundColor: '#06B6D4'
+            }]
+        };
+
+        // Initialize Charts
+        window.onload = function() {
+            const ctx1 = document.getElementById('mainThemesChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: themeData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Main Themes in Survey Responses'
+                        }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById('preparednessChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: preparednessData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Student Preparedness Breakdown'
+                        }
+                    }
+                }
+            });
+        };
+
+        // Tab Navigation
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            document.getElementById(tabId).style.display = 'block';
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Download Functions
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text('Math Education Survey Analysis', 20, 20);
+            doc.text('Generated: ' + new Date().toLocaleDateString(), 20, 30);
+            // Add more content...
+            doc.save('survey-analysis.pdf');
+        }
+
+        function downloadExcel() {
+            const wb = XLSX.utils.book_new();
+            const wsData = [
+                ['Theme', 'Count', 'Percentage'],
+                ['Student Preparedness', 42, '27%'],
+                ['Teaching Resources', 35, '22%'],
+                ['Assessment Methods', 28, '18%']
+            ];
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            XLSX.utils.book_append_sheet(wb, ws, 'Survey Data');
+            XLSX.writeFile(wb, 'survey-analysis.xlsx');
+        }
+
+        function downloadCSV() {
+            const csvContent = 'Theme,Count,Percentage\n' +
+                'Student Preparedness,42,27%\n' +
+                'Teaching Resources,35,22%\n' +
+                'Assessment Methods,28,18%';
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'survey-analysis.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
