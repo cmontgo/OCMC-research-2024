@@ -252,42 +252,7 @@
             event.target.classList.add('active');
         }
 
-        // Download Functions
-        function downloadPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.text('Math Education Survey Analysis', 20, 20);
-            doc.text('Generated: ' + new Date().toLocaleDateString(), 20, 30);
-            // Add more content...
-            doc.save('survey-analysis.pdf');
-        }
-
-        function downloadExcel() {
-            const wb = XLSX.utils.book_new();
-            const wsData = [
-                ['Theme', 'Count', 'Percentage'],
-                ['Student Preparedness', 42, '27%'],
-                ['Teaching Resources', 35, '22%'],
-                ['Assessment Methods', 28, '18%']
-            ];
-            const ws = XLSX.utils.aoa_to_sheet(wsData);
-            XLSX.utils.book_append_sheet(wb, ws, 'Survey Data');
-            XLSX.writeFile(wb, 'survey-analysis.xlsx');
-        }
-
-        function downloadCSV() {
-            const csvContent = 'Theme,Count,Percentage\n' +
-                'Student Preparedness,42,27%\n' +
-                'Teaching Resources,35,22%\n' +
-                'Assessment Methods,28,18%';
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'survey-analysis.csv';
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }
+        
     </script>
 </body>
 </html>
