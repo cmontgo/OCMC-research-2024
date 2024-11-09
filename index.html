@@ -92,6 +92,7 @@
 </head>
 <body>
     <div class="container">
+
         <div class="header">
             <h1>Math Education Survey Analysis</h1>
             <p>Interactive dashboard for analyzing faculty responses about mathematics education issues</p>
@@ -101,6 +102,7 @@
             <div class="tab active" onclick="showTab('overview')">Overview</div>
             <div class="tab" onclick="showTab('details')">Detailed Analysis</div>
             <div class="tab" onclick="showTab('recommendations')">Recommendations</div>
+             <div class="tab" onclick="showTab('reasoning')">Aspects of Math Reasoning</div>
         </div>
 
         <div id="overview" class="tab-content">
@@ -187,75 +189,8 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <script>
-        // Chart Data
-        const themeData = {
-            labels: ['Student Preparedness', 'Teaching Resources', 'Assessment Methods', 
-                    'Professional Development', 'Academic Integrity/AI', 'Student Support', 
-                    'Curriculum Design', 'Technology Integration'],
-            datasets: [{
-                label: 'Number of Responses',
-                data: [42, 35, 28, 25, 20, 18, 15, 12],
-                backgroundColor: '#4F46E5'
-            }]
-        };
-
-        const preparednessData = {
-            labels: ['Basic Math Skills', 'High School Transition', 'Math Anxiety', 'International Students'],
-            datasets: [{
-                label: 'Number of Responses',
-                data: [28, 24, 15, 12],
-                backgroundColor: '#06B6D4'
-            }]
-        };
-
-        // Initialize Charts
-        window.onload = function() {
-            const ctx1 = document.getElementById('mainThemesChart').getContext('2d');
-            new Chart(ctx1, {
-                type: 'bar',
-                data: themeData,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Main Themes in Survey Responses'
-                        }
-                    }
-                }
-            });
-
-            const ctx2 = document.getElementById('preparednessChart').getContext('2d');
-            new Chart(ctx2, {
-                type: 'bar',
-                data: preparednessData,
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Student Preparedness Breakdown'
-                        }
-                    }
-                }
-            });
-        };
-
-        // Tab Navigation
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-            document.getElementById(tabId).style.display = 'block';
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        
-    </script>
-</body>
-import React, { useState } from 'react';
+                <div id="reasoning" class="tab-content" style="display: none;">
+            import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Search } from 'lucide-react';
@@ -379,4 +314,74 @@ const MathSurveyAnalysis = () => {
 };
 
 export default MathSurveyAnalysis;
+        </div>
+    </div>
+
+    <script>
+        // Chart Data
+        const themeData = {
+            labels: ['Student Preparedness', 'Teaching Resources', 'Assessment Methods', 
+                    'Professional Development', 'Academic Integrity/AI', 'Student Support', 
+                    'Curriculum Design', 'Technology Integration'],
+            datasets: [{
+                label: 'Number of Responses',
+                data: [42, 35, 28, 25, 20, 18, 15, 12],
+                backgroundColor: '#4F46E5'
+            }]
+        };
+
+        const preparednessData = {
+            labels: ['Basic Math Skills', 'High School Transition', 'Math Anxiety', 'International Students'],
+            datasets: [{
+                label: 'Number of Responses',
+                data: [28, 24, 15, 12],
+                backgroundColor: '#06B6D4'
+            }]
+        };
+
+        // Initialize Charts
+        window.onload = function() {
+            const ctx1 = document.getElementById('mainThemesChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: themeData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Main Themes in Survey Responses'
+                        }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById('preparednessChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: preparednessData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Student Preparedness Breakdown'
+                        }
+                    }
+                }
+            });
+        };
+
+        // Tab Navigation
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+            document.getElementById(tabId).style.display = 'block';
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        
+    </script>
+</body>
+
 </html>
